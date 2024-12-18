@@ -28,6 +28,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
 }
 
 h1 {
@@ -93,4 +95,18 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+input {
+  padding: .8em 1.2em;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.result {
+  padding: 20px;
+  border: 1px solid #ffffff;
+  margin-top: 20px;
+  width: 300px;
+  text-align: center;
 }
