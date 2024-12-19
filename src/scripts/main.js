@@ -4,7 +4,7 @@ import { extractParams, showData } from './modules/PokemonData';
 
 const getInputName = (e) => {
   const form = new FormData(e.target);
-  const pokeName = form.get('pokeName');
+  const pokeName = form.get('pokeName').toLowerCase();
   return pokeName;
 }
 
