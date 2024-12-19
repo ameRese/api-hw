@@ -110,3 +110,9 @@ input {
   width: 300px;
   text-align: center;
 }
+
+.result dl,
+.result dt,
+.result dd {
+  margin: 0;
+}
