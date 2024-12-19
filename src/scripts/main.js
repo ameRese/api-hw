@@ -1,5 +1,5 @@
 import axios from 'axios';
-import './style.css';
+import '../styles/style.css';
 
 const extractParams = (pokemonData) => {
   const id = pokemonData.id;
