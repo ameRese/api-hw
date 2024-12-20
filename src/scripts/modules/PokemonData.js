@@ -9,7 +9,7 @@ export const extractParams = (pokemonData) => {
     return {id, name, img, types};
 };
 
-export const showData = (data) => {
+export const showPokeData = (data) => {
   const htmlData = `<dl>
     <dt>Name: ${data.name}</dt>
     <dd><img src="${data.img}" alt="" /></dd>
