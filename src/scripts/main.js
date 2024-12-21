@@ -6,25 +6,43 @@ import { searchPokemon, showSearchResult } from './modules/SearchPokemon';
 
 let pokeListWithId = [];
 
+// ページロード時の処理
 const loadHandler = async () => {
+  // ポケモン一覧を取得
   const pokemonList = await getPokeList();
-  // 以降の処理のためにポケモン一覧にPokemonIDを追加
   pokeListWithId = addIdToPokeList(pokemonList.results);
 
+  // タイプ一覧を取得して表示
   const pokeTypeList = await getTypeList();
-  // 以降の処理のためにタイプ一覧にTypeIDを追加
   const typeListWithId = addIdToTypeList(pokeTypeList.results);
-  // TypeIDが10001以上のものは不使用なのでそれ未満を抽出
+  // TypeIDが10001以上のものは不使用
   const validTypeList = typeListWithId.filter((type) => type.id < 10001);
-  // タイプ一覧を表示
   showTypeList(validTypeList);
 };
 
+// インプットボックス入力・変更時の処理
 const inputHandler = (e) => {
+  // インプットボックスの内容に応じた検索結果を表示
   const inputText = e.target.value;
   const searchResult = searchPokemon(inputText, pokeListWithId);
-
   showSearchResult(searchResult);
+
+  // インプットボックスに文字が入力されている場合のみjs-buttonクラスの要素が出現するのでinputHandler内で処理
+  const jsButtons = document.querySelectorAll('.js-button');
+  if (jsButtons) {
+    for (let jsButton of jsButtons) {
+      jsButton.addEventListener('click', (e) => clickHandler(e));
+    }
+  }
+};
+
+// 検索結果クリック時の処理
+const clickHandler = async (e) => {
+  // クリックされたボタンに紐づいたIDのポケモンデータを表示
+  const pokeId = e.target.getAttribute('data-id');
+  const pokemonData = await getPokemonData(pokeId);
+  const extractData = extractParams(pokemonData);
+  showPokeData(extractData);
 };
 
 const getInputName = (e) => {
