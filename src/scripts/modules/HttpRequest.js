@@ -24,3 +24,13 @@ export const getTypeList = async () => {
     console.error(error);
   }
 };
+
+export const getPokeList = async () => {
+  try {
+    const LIMIT_COUNTS = 10000;
+    const response = await instance.get(`pokemon/?limit=${LIMIT_COUNTS}`);
+    return response.data;
+  } catch(error) {
+    console.error(error);
+  }
+};

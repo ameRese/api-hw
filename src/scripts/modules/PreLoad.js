@@ -28,3 +28,14 @@ export const showTypeList = (typeList) => {
   const div = document.getElementById('js-type-list');
   div.append(frag);
 };
+
+export const addIdToPokeList = (pokeList) => {
+  const START_ID_POS = 34;
+  return pokeList.map((pokemon) => {
+    return {
+      name: pokemon.name,
+      url: pokemon.url,
+      id: pokemon.url.slice(START_ID_POS, -1),
+    };
+  });
+};

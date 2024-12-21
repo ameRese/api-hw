@@ -1,10 +1,16 @@
 import '../styles/style.css';
-import { getPokemonData, getTypeList } from './modules/HttpRequest';
+import { getPokeList, getPokemonData, getTypeList } from './modules/HttpRequest';
 import { extractParams, showPokeData } from './modules/PokemonData';
-import { addIdToTypeList, showTypeList } from './modules/PreLoad';
+import { addIdToPokeList, addIdToTypeList, showTypeList } from './modules/PreLoad';
+import { searchPokemon, showSearchResult } from './modules/SearchPokemon';
+
+let pokeListWithId = [];
 
 const loadHandler = async () => {
-  // タイプ一覧を取得
+  const pokemonList = await getPokeList();
+  // 以降の処理のためにポケモン一覧にPokemonIDを追加
+  pokeListWithId = addIdToPokeList(pokemonList.results);
+
   const pokeTypeList = await getTypeList();
   // 以降の処理のためにタイプ一覧にTypeIDを追加
   const typeListWithId = addIdToTypeList(pokeTypeList.results);
@@ -12,6 +18,13 @@ const loadHandler = async () => {
   const validTypeList = typeListWithId.filter((type) => type.id < 10001);
   // タイプ一覧を表示
   showTypeList(validTypeList);
+};
+
+const inputHandler = (e) => {
+  const inputText = e.target.value;
+  const searchResult = searchPokemon(inputText, pokeListWithId);
+
+  showSearchResult(searchResult);
 };
 
 const getInputName = (e) => {
@@ -31,4 +44,5 @@ const submitHandler = async (e) => {
 };
 
 window.addEventListener('load', () => loadHandler());
+document.getElementById('js-input').addEventListener('input', (e) => inputHandler(e));
 document.getElementById('js-form').addEventListener('submit', (e) => submitHandler(e)); 
